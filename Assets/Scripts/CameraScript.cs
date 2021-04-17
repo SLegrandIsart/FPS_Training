@@ -6,25 +6,29 @@ public class CameraScript : MonoBehaviour
 {
     [SerializeField] private float yMax = 90f;
 
-    [SerializeField] private float sensitivity = 90f;
-
-    float xAxis = 0f;
-
     float vMove = 0f;
 
-    void Update()
-    {
-        xAxis = Input.GetAxis("Mouse Y");
+    private PlayerController controller = null;
 
+	private void Awake()
+	{
+        controller = GetComponentInParent<PlayerController>();
+    }
+
+    void Start()
+    {
         vMove = transform.eulerAngles.x;
     }
 
-    private void FixedUpdate()
+	private void Update()
 	{
-        vMove -= xAxis * sensitivity * Time.fixedDeltaTime;
+        vMove -= controller.yAxis * Time.deltaTime;
 
         vMove = Mathf.Clamp(Mathf.Repeat(vMove + 180, 360) - 180, -yMax, yMax);
+    }
 
+	private void FixedUpdate()
+	{
         transform.localRotation = Quaternion.Euler(vMove, 0f, 0f);
     }
 }

@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class PlayerRotation : MonoBehaviour
 {
-    [SerializeField] private float sensitivity = 90f;
-
-    float yAxis = 0f;
-
     float hMove = 0f;
 
-    // Update is called once per frame
+    private PlayerController controller = null;
+
+    private void Awake()
+	{
+        controller = GetComponentInParent<PlayerController>();
+    }
+
+	private void Start()
+	{
+        hMove = transform.eulerAngles.y;
+    }
+
     void Update()
     {
-        yAxis = Input.GetAxis("Mouse X");
-
-        hMove = transform.eulerAngles.y;
+        hMove += controller.xAxis * Time.deltaTime;
     }
 
     private void FixedUpdate()
 	{
-        hMove += yAxis * sensitivity * Time.fixedDeltaTime;
-
         transform.rotation = Quaternion.Euler(0f, hMove, 0f);
     }
 }
