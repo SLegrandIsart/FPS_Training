@@ -1,19 +1,62 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float mouseSensitivity = 90f;
+    [SerializeField] private float m_mouseSensitivity = 90f;
+    [SerializeField] private bool  m_toggleSprint = false;
+    [SerializeField] private bool  m_toggleCrouch = false;
 
-    public float xAxis = 0f;
-    public float yAxis = 0f;
+    [HideInInspector]
+    public float m_xAxis = 0f;
 
+    [HideInInspector]
+    public float m_yAxis = 0f;
+
+    [HideInInspector]
+    public float m_xMovement = 0f;
+
+    [HideInInspector]
+    public float m_yMovement = 0f;
+
+    [HideInInspector]
+    public bool m_sprint = false;
+
+    [HideInInspector]
+    public bool m_jump = false;
+
+    [HideInInspector]
+    public bool m_crouch = false;
 
     // Update is called once per frame
     void Update()
     {
-        xAxis = Input.GetAxis("Mouse X") * mouseSensitivity;
-        yAxis = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        m_xAxis = Input.GetAxis("Mouse X") * m_mouseSensitivity;
+        m_yAxis = Input.GetAxis("Mouse Y") * m_mouseSensitivity;
+
+        m_xMovement = Input.GetAxis("Horizontal") * m_mouseSensitivity;
+        m_yMovement = Input.GetAxis("Vertical") * m_mouseSensitivity;
+
+        m_jump = Input.GetButtonDown("Jump");
+
+        // TODO -> Change the following inputs to buttons in inputs manager (Crouch, and Sprint)
+
+        if (!m_toggleCrouch)
+        {
+            m_crouch = Input.GetKey(KeyCode.LeftControl);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            m_crouch = !m_crouch;
+        }
+
+
+        if (!m_toggleSprint)
+        {
+            m_sprint = Input.GetKey(KeyCode.LeftShift);
+        }
+        else if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            m_sprint = !m_sprint;
+        }
     }
 }

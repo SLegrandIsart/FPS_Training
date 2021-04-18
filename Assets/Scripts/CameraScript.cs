@@ -22,7 +22,7 @@ public class CameraScript : MonoBehaviour
 
 	private void Update()
 	{
-        vMove -= controller.yAxis * Time.deltaTime;
+        vMove -= controller.m_yAxis * Time.deltaTime;
 
         vMove = Mathf.Clamp(Mathf.Repeat(vMove + 180, 360) - 180, -yMax, yMax);
     }

@@ -1,30 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerRotation : MonoBehaviour
 {
-    float hMove = 0f;
+    float m_hMove = 0f;
 
-    private PlayerController controller = null;
+    private PlayerController m_controller = null;
 
     private void Awake()
 	{
-        controller = GetComponentInParent<PlayerController>();
+        m_controller = GetComponentInParent<PlayerController>();
     }
 
 	private void Start()
 	{
-        hMove = transform.eulerAngles.y;
+        m_hMove = transform.eulerAngles.y;
     }
 
     void Update()
     {
-        hMove += controller.xAxis * Time.deltaTime;
+        m_hMove += m_controller.m_xAxis * Time.deltaTime;
     }
 
     private void FixedUpdate()
 	{
-        transform.rotation = Quaternion.Euler(0f, hMove, 0f);
+        transform.rotation = Quaternion.Euler(0f, m_hMove, 0f);
     }
 }
